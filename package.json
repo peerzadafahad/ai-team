@@ -1,0 +1,11 @@
+{
+  "name": "ai-team",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Team - Digital Agency Agent System",
+  "scripts": {
+    "dev": "cd apps/dashboard && npm run dev",
+    "build": "cd apps/dashboard && npm run build",
+    "start": "cd apps/dashboard && npm run start"
+  }
+}

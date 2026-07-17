@@ -1,0 +1,43 @@
+{
+  // Terminal Configuration
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+  "terminal.integrated.profiles.windows": {
+    "Windows PowerShell": {
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "icon": "terminal-powershell",
+      "args": ["-NoLogo", "-ExecutionPolicy", "Bypass"]
+    },
+    "Command Prompt": {
+      "path": "${env:windir}\\System32\\cmd.exe",
+      "args": []
+    }
+  },
+  "terminal.integrated.automationShell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "terminal.integrated.sendKeybindingsToShell": false,
+  "terminal.integrated.gpuAcceleration": "on",
+  "terminal.integrated.localEchoEnabled": "auto",
+  "terminal.integrated.shellIntegration.decorationsEnabled": "never",
+
+  // Git Configuration
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+
+  // File Explorer
+  "explorer.excludeGitIgnore": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+    "**/.next": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true
+  }
+}
