@@ -1,74 +1,25 @@
 'use client'
 
 import React from 'react'
+import { tasks } from '@/data/dashboard-data'
 
-const tasks = [
-  {
-    title: 'Design new landing page',
-    agent: 'Designer',
-    priority: 'high',
-    status: 'In Progress',
-    deadline: '2h left',
-    color: 'from-pink-500 to-pink-600',
-    progress: 60,
-  },
-  {
-    title: 'Fix API authentication bug',
-    agent: 'Developer',
-    priority: 'urgent',
-    status: 'Review',
-    deadline: 'Overdue',
-    color: 'from-blue-500 to-blue-600',
-    progress: 90,
-  },
-  {
-    title: 'Write SEO blog post',
-    agent: 'Writer',
-    priority: 'medium',
-    status: 'In Progress',
-    deadline: '1d left',
-    color: 'from-green-500 to-green-600',
-    progress: 45,
-  },
-  {
-    title: 'Client onboarding video',
-    agent: 'Animator',
-    priority: 'low',
-    status: 'Pending',
-    deadline: '3d left',
-    color: 'from-orange-500 to-orange-600',
-    progress: 10,
-  },
-  {
-    title: 'Monthly financial report',
-    agent: 'Accountant',
-    priority: 'high',
-    status: 'In Progress',
-    deadline: '5h left',
-    color: 'from-yellow-500 to-yellow-600',
-    progress: 35,
-  },
-]
-
-export default function TaskList({ detailed }: { detailed?: boolean }) {
-  const displayTasks = detailed ? [...tasks, ...tasks.slice(0, 3).map(t => ({ ...t, title: t.title + ' v2', deadline: '4d left', status: 'Pending' as const, progress: 5 }))] : tasks
+export default function TaskList() {
+  const activeTasks = tasks.filter(t => t.status !== 'Completed')
+  const completedCount = tasks.filter(t => t.status === 'Completed' || t.progress >= 100).length
 
   return (
     <div className="card p-4">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-subtitle">Active Tasks</h2>
-          <p className="text-muted">{displayTasks.length} tasks requiring attention</p>
+          <p className="text-muted">{activeTasks.length} tasks requiring attention · {completedCount} done</p>
         </div>
-        <button className="text-xs text-primary-400 hover:text-primary-300 transition-colors">
-          View All →
-        </button>
       </div>
 
       <div className="space-y-1.5">
-        {displayTasks.map((task, index) => (
+        {activeTasks.map((task) => (
           <div
-            key={index}
+            key={task.id}
             className="group flex items-center gap-3 p-2.5 rounded-lg hover:bg-gray-800/30 transition-all duration-200 cursor-pointer"
           >
             {/* Agent initial */}
@@ -98,7 +49,7 @@ export default function TaskList({ detailed }: { detailed?: boolean }) {
             {/* Status */}
             <span className={`badge ${
               task.status === 'In Progress' ? 'bg-primary-500/10 text-primary-400 border-primary-500/20' :
-              task.status === 'Review' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
+              task.status === ('Review' as string) ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
               task.status === 'Pending' ? 'bg-gray-500/10 text-gray-400 border-gray-500/20' :
               'bg-accent-500/10 text-accent-400 border-accent-500/20'
             }`}>

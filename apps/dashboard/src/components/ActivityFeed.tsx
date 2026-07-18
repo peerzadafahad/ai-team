@@ -1,56 +1,11 @@
 'use client'
 
 import React from 'react'
+import { activities } from '@/data/dashboard-data'
 
-const activities = [
-  {
-    agent: 'Developer',
-    action: 'completed task',
-    detail: 'API Integration',
-    time: '2 min ago',
-    color: 'from-blue-500 to-blue-600',
-  },
-  {
-    agent: 'Designer',
-    action: 'submitted for approval',
-    detail: 'Brand Identity Package',
-    time: '10 min ago',
-    color: 'from-pink-500 to-pink-600',
-  },
-  {
-    agent: 'Manager',
-    action: 'assigned task to',
-    detail: 'Writer - Blog Post',
-    time: '15 min ago',
-    color: 'from-purple-500 to-purple-600',
-  },
-  {
-    agent: 'Marketer',
-    action: 'published campaign',
-    detail: 'Social Media Ads',
-    time: '30 min ago',
-    color: 'from-cyan-500 to-cyan-600',
-  },
-  {
-    agent: 'Support',
-    action: 'resolved ticket',
-    detail: 'Client #1024',
-    time: '45 min ago',
-    color: 'from-teal-500 to-teal-600',
-  },
-  {
-    agent: 'Accountant',
-    action: 'generated report',
-    detail: 'Q3 Financial Summary',
-    time: '1h ago',
-    color: 'from-yellow-500 to-yellow-600',
-  },
-]
-
-export default function ActivityFeed({ detailed }: { detailed?: boolean }) {
-  const displayActivities = detailed
-    ? [...activities, ...activities.slice(0, 3).map(a => ({ ...a, time: '2h ago' }))]
-    : activities
+export default function ActivityFeed() {
+  // Show most recent activities first
+  const sortedActivities = [...activities].sort((a, b) => b.timestamp - a.timestamp)
 
   return (
     <div className="card p-4">
@@ -66,13 +21,13 @@ export default function ActivityFeed({ detailed }: { detailed?: boolean }) {
       </div>
 
       <div className="space-y-0">
-        {displayActivities.map((activity, index) => (
+        {sortedActivities.map((activity, index) => (
           <div
-            key={index}
+            key={activity.id}
             className="relative flex items-start gap-2.5 pb-4 pl-3 last:pb-0"
           >
             {/* Timeline line */}
-            {index < displayActivities.length - 1 && (
+            {index < sortedActivities.length - 1 && (
               <div className="absolute left-[13px] top-6 bottom-0 w-px bg-gray-800" />
             )}
             

@@ -1,75 +1,14 @@
 'use client'
 
 import React from 'react'
+import { techStack } from '@/data/dashboard-data'
 
-const techStack = [
-  {
-    category: 'Frontend',
-    items: [
-      { name: 'Next.js 14', status: 'completed', progress: 100 },
-      { name: 'React 18', status: 'completed', progress: 100 },
-      { name: 'TypeScript', status: 'completed', progress: 100 },
-      { name: 'Tailwind CSS', status: 'completed', progress: 100 },
-    ],
-  },
-  {
-    category: 'Backend & API',
-    items: [
-      { name: 'Node.js API Layer', status: 'in-progress', progress: 75 },
-      { name: 'RESTful Endpoints', status: 'in-progress', progress: 60 },
-      { name: 'WebSocket Server', status: 'planned', progress: 20 },
-      { name: 'Authentication', status: 'completed', progress: 100 },
-    ],
-  },
-  {
-    category: 'AI & Agents',
-    items: [
-      { name: 'Agent Framework', status: 'in-progress', progress: 70 },
-      { name: 'Task Orchestration', status: 'in-progress', progress: 55 },
-      { name: 'Agent Communication', status: 'planned', progress: 30 },
-      { name: 'Auto-scaling', status: 'planned', progress: 10 },
-    ],
-  },
-  {
-    category: 'Data & Storage',
-    items: [
-      { name: 'Database Schema', status: 'completed', progress: 100 },
-      { name: 'Cache Layer', status: 'in-progress', progress: 65 },
-      { name: 'File Storage', status: 'completed', progress: 100 },
-      { name: 'Real-time Sync', status: 'planned', progress: 25 },
-    ],
-  },
-  {
-    category: 'DevOps & Deployment',
-    items: [
-      { name: 'CI/CD Pipeline', status: 'in-progress', progress: 60 },
-      { name: 'Docker Setup', status: 'completed', progress: 100 },
-      { name: 'Monitoring', status: 'planned', progress: 15 },
-      { name: 'Load Balancing', status: 'planned', progress: 5 },
-    ],
-  },
-  {
-    category: 'Testing & Quality',
-    items: [
-      { name: 'Unit Tests', status: 'in-progress', progress: 50 },
-      { name: 'E2E Testing', status: 'planned', progress: 20 },
-      { name: 'Code Coverage', status: 'planned', progress: 10 },
-      { name: 'Performance Testing', status: 'planned', progress: 5 },
-    ],
-  },
-]
-
-export default function TechStackSection({ detailed }: { detailed?: boolean }) {
-  const overallProgress = Math.round(
-    techStack.reduce((acc, cat) => {
-      return acc + cat.items.reduce((sum, item) => sum + item.progress, 0) / cat.items.length
-    }, 0) / techStack.length
-  )
-
+export default function TechStackSection() {
   const completedItems = techStack.reduce((acc, cat) => {
     return acc + cat.items.filter(item => item.status === 'completed').length
   }, 0)
   const totalItems = techStack.reduce((acc, cat) => acc + cat.items.length, 0)
+  const overallProgress = Math.round((completedItems / totalItems) * 100)
 
   return (
     <div className="card p-4">
@@ -92,27 +31,27 @@ export default function TechStackSection({ detailed }: { detailed?: boolean }) {
         />
       </div>
 
-      <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {techStack.map((category) => {
           const catProgress = Math.round(
             category.items.reduce((sum, item) => sum + item.progress, 0) / category.items.length
           )
           return (
-            <div key={category.category} className="card-item p-3">
+            <div key={category.category} className="card-item p-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-xs font-semibold text-gray-200">{category.category}</h3>
                 <span className="text-muted">{catProgress}%</span>
               </div>
 
               {/* Category progress bar */}
-              <div className="mb-2 progress-bar">
+              <div className="mb-3 progress-bar">
                 <div
                   className="progress-fill-gradient"
                   style={{ width: `${catProgress}%` }}
                 />
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {category.items.map((item) => (
                   <div key={item.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
